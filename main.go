@@ -96,10 +96,18 @@ func (s ParcelService) Delete(number int) error {
 	return s.store.Delete(number)
 }
 
+// кажется, изначально прописанная череда return не дает функции доработать до конца
 func main() {
 	// настройте подключение к БД
+	db, err := sql.Open("sqlite", "tracker.db")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer db.Close()
 
-	store := // создайте объект ParcelStore функцией NewParcelStore
+	// создайте объект ParcelStore функцией NewParcelStore
+	store := NewParcelStore(db)
 	service := NewParcelService(store)
 
 	// регистрация посылки
